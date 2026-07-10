@@ -109,6 +109,19 @@
         SoloYellowFret = Fret13,
         SoloBlueFret = Fret14,
         SoloOrangeFret = Fret15,
+
+        LeftStickXAxis = 15,
+        LeftStickYAxis = 16,
+        RightStickXAxis = 17,
+        RightStickYAxis = 18,
+        LeftTrigger = 19,
+        RightTrigger = 20,
+
+        GreenNoteBend = LeftStickXAxis,
+        RedNoteBend = LeftStickYAxis,
+        YellowNoteBend = RightStickXAxis,
+        BlueNoteBend = RightStickYAxis,
+        OrangeNoteBend = LeftTrigger
     }
 
     /// <summary>
