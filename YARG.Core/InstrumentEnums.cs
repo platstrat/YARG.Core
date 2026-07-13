@@ -18,6 +18,7 @@ namespace YARG.Core
         // 0-4: Guitar
         FiveFretGuitar = 0,
         SixFretGuitar = 1,
+        BendingFretsGuitar = 2,
 
         // 5-9: Drums
         FourLaneDrums = 5,
@@ -47,6 +48,9 @@ namespace YARG.Core
         FiveFretRhythm = 2,
         FiveFretCoopGuitar = 3,
         Keys = 4,
+        BendingFretsGuitar = 5,
+        BendingFretsRhythm = 6,
+        BendingFretsCoopGuitar = 7,
 
         // 10-19: 6-fret guitar
         SixFretGuitar = 10,
@@ -101,11 +105,11 @@ namespace YARG.Core
     {
         None = 0,
 
-        Beginner   = 1 << Difficulty.Beginner,
-        Easy       = 1 << Difficulty.Easy,
-        Medium     = 1 << Difficulty.Medium,
-        Hard       = 1 << Difficulty.Hard,
-        Expert     = 1 << Difficulty.Expert,
+        Beginner = 1 << Difficulty.Beginner,
+        Easy = 1 << Difficulty.Easy,
+        Medium = 1 << Difficulty.Medium,
+        Hard = 1 << Difficulty.Hard,
+        Expert = 1 << Difficulty.Expert,
         ExpertPlus = 1 << Difficulty.ExpertPlus,
 
         All = Beginner | Easy | Medium | Hard | Expert | ExpertPlus,
@@ -117,10 +121,10 @@ namespace YARG.Core
     public enum StarPowerActivationType : byte
     {
         // Ordered chronologically -- DO NOT REORDER!!
-        Freestyle     = 0, // Old Rock Band style    // TODO: Implement
+        Freestyle = 0, // Old Rock Band style    // TODO: Implement
         RightmostLane = 1, // Modern Rock Band style // TODO: Implement
         RightmostNote = 2, // Clone Hero style
-        AllNotes      = 3, // Old YARG style
+        AllNotes = 3, // Old YARG style
     }
 
     /// <summary>
@@ -129,9 +133,9 @@ namespace YARG.Core
     public enum OpenLaneDisplayType : byte
     {
         // Serialized; do not reorder
-        Never                   = 0,
-        Always                  = 1,
-        IfChartContainsOpens    = 2
+        Never = 0,
+        Always = 1,
+        IfChartContainsOpens = 2
     }
 
     /// <summary>
@@ -140,25 +144,25 @@ namespace YARG.Core
     public enum DrumsHighwayItem : byte
     {
         // Serialized; do not reorder
-        Kick                    = 0,
-        Kick1x                  = 1,
-        Kick2x                  = 2,
-        Kick2xConditional       = 3,
+        Kick = 0,
+        Kick1x = 1,
+        Kick2x = 2,
+        Kick2xConditional = 3,
 
-        Red             = 4,
-        Yellow          = 5,
-        Blue            = 6,
-        Green           = 7,
+        Red = 4,
+        Yellow = 5,
+        Blue = 6,
+        Green = 7,
 
-        YellowCymbal    = 8,
-        BlueCymbal      = 9,
-        GreenCymbal     = 10,
+        YellowCymbal = 8,
+        BlueCymbal = 9,
+        GreenCymbal = 10,
 
-        YellowDrum      = 11,
-        BlueDrum        = 12,
-        GreenDrum       = 13,
+        YellowDrum = 11,
+        BlueDrum = 12,
+        GreenDrum = 13,
 
-        Orange          = 14
+        Orange = 14
     }
 
     public static class ChartEnumExtensions
@@ -177,6 +181,10 @@ namespace YARG.Core
                 Instrument.SixFretBass or
                 Instrument.SixFretRhythm or
                 Instrument.SixFretCoopGuitar => GameMode.SixFretGuitar,
+
+                Instrument.BendingFretsGuitar or
+                Instrument.BendingFretsRhythm or
+                Instrument.BendingFretsCoopGuitar => GameMode.BendingFretsGuitar,
 
                 Instrument.FourLaneDrums or
                 Instrument.ProDrums => GameMode.FourLaneDrums,
@@ -220,6 +228,12 @@ namespace YARG.Core
                     Instrument.SixFretBass,
                     Instrument.SixFretRhythm,
                     Instrument.SixFretCoopGuitar,
+                },
+                GameMode.BendingFretsGuitar => new[]
+                {
+                    Instrument.BendingFretsGuitar,
+                    Instrument.BendingFretsRhythm,
+                    Instrument.BendingFretsCoopGuitar
                 },
                 GameMode.FourLaneDrums => new[]
                 {
@@ -271,7 +285,7 @@ namespace YARG.Core
         {
             return gameMode switch
             {
-                GameMode.EliteDrums     => entry.HasInstrument(Instrument.FiveLaneDrums) ?
+                GameMode.EliteDrums => entry.HasInstrument(Instrument.FiveLaneDrums) ?
                     new[]
                     {
                         Instrument.FiveLaneDrums,
@@ -282,7 +296,7 @@ namespace YARG.Core
                         Instrument.ProDrums,
                         //Instrument.EliteDrums,
                     },
-                _  => PossibleInstruments(gameMode)
+                _ => PossibleInstruments(gameMode)
             };
         }
 
@@ -296,11 +310,11 @@ namespace YARG.Core
         {
             return difficulty switch
             {
-                DifficultyMask.Beginner   => Difficulty.Beginner,
-                DifficultyMask.Easy       => Difficulty.Easy,
-                DifficultyMask.Medium     => Difficulty.Medium,
-                DifficultyMask.Hard       => Difficulty.Hard,
-                DifficultyMask.Expert     => Difficulty.Expert,
+                DifficultyMask.Beginner => Difficulty.Beginner,
+                DifficultyMask.Easy => Difficulty.Easy,
+                DifficultyMask.Medium => Difficulty.Medium,
+                DifficultyMask.Hard => Difficulty.Hard,
+                DifficultyMask.Expert => Difficulty.Expert,
                 DifficultyMask.ExpertPlus => Difficulty.ExpertPlus,
                 _ => throw new ArgumentException($"Cannot convert difficulty mask {difficulty} into a single difficulty!")
             };
