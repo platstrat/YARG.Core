@@ -45,7 +45,7 @@ namespace YARG.Core.Engine
                 _engineManager = manager;
                 Happiness = rockMeterPreset.StartingHappiness;
 
-                SubscribeToEngineEvents();
+                SubscribeToEvents();
             }
 
             public void SendCommand(EngineCommandType command)
@@ -130,6 +130,11 @@ namespace YARG.Core.Engine
         {
             _starpowerCount = Math.Clamp(count, 0, int.MaxValue);
             UpdateBandMultiplier();
+
+            if (_playerFailed && count > 0)
+            {
+                RevivePlayer();
+            }
         }
 
         public void Reset()
